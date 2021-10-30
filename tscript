@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# usage: ./tscript [test ...]
+#
+tests="a b c d e f g h i j k l m"
+if [[ "$#" != "0" ]]; then
+    tests="$*"
+fi
+for t in $tests; do
+    case "$t" in
+     a) echo "Starting test a"
+        echo "No flags and no file name"
+        echo "===== ./suniq <input"
+        ./suniq <input | diff - testa.out | head
+        echo "===== Stopping test a"
+        ;;
+     b) echo "Starting test b"
+        echo "-i flag and filename in argument list"
+        echo "===== ./suniq -i input"
+        ./suniq -i input | diff - testb.out | head
+        echo "===== Stopping test b"
+        ;;
+     c) echo "Starting test c"
+        echo "-d flag and filename in argument list"
+        echo "===== ./suniq -d input"
+        ./suniq -d input | diff - testc.out | head
+        echo "===== Stopping test c"
+        ;;
+     d) echo "Starting test d"
+        echo "-u flag and input from stdin"
+        echo "===== ./suniq -u <input"
+        ./suniq -u <input | diff - testd.out | head
+        echo "===== Stopping test d"
+        ;;
+     e) echo "Starting test e"
+        echo "-ci flags"
+        echo "===== ./suniq -ci input"
+        ./suniq -ci input | diff - teste.out | head
+        echo "===== Stopping test e"
+        ;;
+     f) echo "Starting test f"
+        echo "-cd flags"
+        echo "===== ./suniq -cd input"
+        ./suniq -cd input | diff - testf.out | head
+        echo "===== Stopping test f"
+        ;;
+     g) echo "Starting test g"
+        echo "-cu flags"
+        echo "===== ./suniq -cu input"
+        ./suniq -cu input | diff - testg.out | head
+        echo "===== Stopping test g"
+        ;;
+     h) echo "Starting test h"
+        echo "-du flags"
+        echo "===== ./suniq -du input"
+        ./suniq -du input | diff - testh.out | head
+        echo "===== Stopping test h"
+        ;;
+     i) echo "Starting test i"
+        echo "-icd flags"
+        echo "===== ./suniq -icd input"
+        ./suniq -icd input | diff - testi.out | head
+        echo "===== Stopping test i"
+        ;;
+     j) echo "Starting test j"
+        echo "-icu flags"
+        echo "===== ./suniq -icu input"
+        ./suniq -icu input | diff - testj.out | head
+        echo "===== Stopping test j"
+        ;;
+     k) echo "Starting test k"
+        echo "-i -c -d as separate flags"
+        echo "===== ./suniq -i -c -d input"
+        ./suniq -i -c -d input | diff - testk.out | head
+        echo "===== Stopping test k"
+        ;;
+     l) echo "Starting test l"
+        echo "generate error message for illegal flag"
+        echo "===== ./suniq -z"
+        ./suniq -z
+        echo "===== Stopping test l"
+        ;;
+     m) echo "Starting test m"
+        echo "generate error message for unknown file"
+        echo "===== ./suniq JoeSventekIllegalFileName"
+        ./suniq JoeSventekIllegalFileName
+        echo "===== Stopping test m"
+        ;;
+     *) echo $t - illegal test
+        ;;
+    esac
+done
